@@ -6,5 +6,29 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  
+
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+main ol {
+  display: flex;
+  flex-direction: column;
+  background-color: blue;
+  padding: 0;
+
+}
+
+button {
+  display: flex;
+  padding: 10px;
+  background-color: blueviolet;
+  color: white;
+  /* border-radius: 6px; */
 }
