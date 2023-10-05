@@ -42,13 +42,13 @@ button {
   background: none;
   border: none;
   color: white;
+  background-color: blueviolet;
+  border: 1px solid black;
+  border-radius: 7px;
   /* border-radius: 6px; */
 }
 
 li {
-  background-color: blueviolet;
   margin-bottom: 10px;
-  border: 1px solid black;
-  border-radius: 7px;
 
 }
