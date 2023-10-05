@@ -1,4 +1,4 @@
-var timeLeft = 10;
+var timeLeft = 60;
 var startScreen = document.querySelector(".start-screen");
 var score = 0;
 var index = 0;
@@ -47,8 +47,6 @@ function getRandom(array) {
 // displays the question on the screen (with its choices)
 function setQuestion() {
   var currentQuestion = getRandom(questions);
-  console.log(currentQuestion);
-  console.log(questions);
   question.textContent = currentQuestion.question;
   button1.textContent = currentQuestion.choice1;
   button2.textContent = currentQuestion.choice2;
@@ -59,16 +57,23 @@ function setQuestion() {
     if (clicked.getAttribute("id") === currentQuestion.answer) {
       score += 5;
       questions.splice(index, 1);
-      console.log(questions);
       if (questions.length > 0) {
-      setQuestion();
+        setQuestion();
       }
+      else {
+        endGame();
+      }
+    }
+    else if (clicked.getAttribute("id") != currentQuestion.answer) {
+      timeLeft -= 5;
     }
   })
 }
 
+// This function will run when either time runs out, or all questions have been answered
 function endGame() {
-  
+  question.textContent = "Game Over!";
+  document.querySelector("#choices").textContent = "";
 }
 
 
@@ -78,9 +83,10 @@ function setTimer() {
     timerEl.textContent =  `${timeLeft} second(s) remaining`;
     timeLeft--;
 
-    if (timeLeft < 0) {
+    if (timeLeft < 0 || questions.length === 0) {
       clearInterval(timeInterval);
       timerEl.textContent = "";
+      endGame();
     }
   }, 1000);
 }
