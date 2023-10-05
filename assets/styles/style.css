@@ -17,18 +17,38 @@ main {
 
 }
 
-main ol {
+.start-screen {
   display: flex;
   flex-direction: column;
-  background-color: blue;
-  padding: 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
+#startBtn {
+  color: black;
+  background-color: lightgray;
+  padding: 15px;
+}
+
+.question-block {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
 }
 
 button {
   display: flex;
   padding: 10px;
-  background-color: blueviolet;
+  background: none;
+  border: none;
   color: white;
   /* border-radius: 6px; */
+}
+
+li {
+  background-color: blueviolet;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  border-radius: 7px;
+
 }
