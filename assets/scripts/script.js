@@ -14,6 +14,9 @@ var button2 = document.querySelector("#choice2");
 var button3 = document.querySelector("#choice3");
 var button4 = document.querySelector("#choice4");
 
+var clickedID = "";
+var currentQuestion;
+
 // Actual quiz questions
 var question1 = {
   question: ".addEventListener is an example of which of the following?",
@@ -44,18 +47,13 @@ function getRandom(array) {
   return array[index];
 }
 
-// displays the question on the screen (with its choices)
-function setQuestion() {
-  var currentQuestion = getRandom(questions);
-  question.textContent = currentQuestion.question;
-  button1.textContent = currentQuestion.choice1;
-  button2.textContent = currentQuestion.choice2;
-  button3.textContent = currentQuestion.choice3;
-  button4.textContent = currentQuestion.choice4;
-  quiz.addEventListener("click", function(event) {
-    var clicked = event.target;
-    if (clicked.getAttribute("id") === currentQuestion.answer) {
-      score += 5;
+// Listens for a click in the quiz area
+quiz.addEventListener("click", function(event) {
+  var clicked = event.target;
+  // Checks if the click in the quiz area was a button
+  if( clicked.matches("button") ){
+    clickedID = clicked.getAttribute("id");
+    if (clickedID === currentQuestion.answer) {
       questions.splice(index, 1);
       if (questions.length > 0) {
         setQuestion();
@@ -64,14 +62,27 @@ function setQuestion() {
         endGame();
       }
     }
-    else if (clicked.getAttribute("id") != currentQuestion.answer) {
+    else if (clickedID != currentQuestion.answer) {
       timeLeft -= 5;
     }
-  })
+  }
+})
+
+// displays the question on the screen (with its choices)
+function setQuestion() {
+  // randomly picks a question from the array and sets it to currentQuestion
+  currentQuestion = getRandom(questions);
+  // fills out the question on screen with the contents of currentQuestion
+  question.textContent = currentQuestion.question;
+  button1.textContent = currentQuestion.choice1;
+  button2.textContent = currentQuestion.choice2;
+  button3.textContent = currentQuestion.choice3;
+  button4.textContent = currentQuestion.choice4;
 }
 
-// This function will run when either time runs out, or all questions have been answered
+// This function will run when either time runs out, or all questions have been answered correctly
 function endGame() {
+  score = timeLeft;
   question.textContent = "Game Over!";
   document.querySelector("#choices").textContent = "";
 }
