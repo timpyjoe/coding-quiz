@@ -1,10 +1,13 @@
 var timeLeft = 60;
-var startScreen = document.querySelector(".start-screen");
 var score = 0;
 var index = 0;
 
+var startScreen = document.querySelector(".start-screen");
 var timerEl = document.querySelector("#timer");
 var quiz = document.querySelector(".question-block");
+var scorebox = document.querySelector(".scorebox");
+var initials = document.querySelector("#initials");
+var addScore = document.querySelector("#addScore");
 
 var question = document.querySelector("#question");
 var button1 = document.querySelector("#choice1");
@@ -82,24 +85,32 @@ function setQuestion() {
 
 // This function will run when either time runs out, or all questions have been answered correctly
 function endGame() {
-  score = timeLeft;
+  score = Math.ceil(timeLeft);
+  scorebox.setAttribute("style", "visibility:visible");
   question.textContent = "Game Over!";
-  document.querySelector("#choices").textContent = "";
+  document.querySelector("#choices").textContent = `Your score was ${score}!`;
+
 }
+
+// Updates the scores when the user submits their initials
+addScore.addEventListener("click", function(event) {
+  localStorage.setItem("Initials", initials.value);
+})
 
 
 // Sets the time
 function setTimer() {
   var timeInterval = setInterval(function(){
-    timerEl.textContent =  `${timeLeft} second(s) remaining`;
-    timeLeft--;
+    var displayTime = Math.ceil(timeLeft);
+    timerEl.textContent =  `${displayTime} second(s) remaining`;
+    timeLeft -= 0.5;
 
     if (timeLeft < 0 || questions.length === 0) {
       clearInterval(timeInterval);
       timerEl.textContent = "";
       endGame();
     }
-  }, 1000);
+  }, 500);
 }
 
 // Runs the game. This function is called when the 'start game' button is clicked

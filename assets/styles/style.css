@@ -48,6 +48,10 @@ button {
   /* border-radius: 6px; */
 }
 
+ol {
+  padding: 0px;
+}
+
 li {
   margin-bottom: 10px;
 
