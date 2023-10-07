@@ -5,8 +5,6 @@ var index = 0;
 
 var timerEl = document.querySelector("#timer");
 var quiz = document.querySelector(".question-block");
-// startScreen.setAttribute("style", "visibility:visible");
-// quiz.setAttribute("style", "visibility:hidden");
 
 var question = document.querySelector("#question");
 var button1 = document.querySelector("#choice1");
@@ -14,6 +12,7 @@ var button2 = document.querySelector("#choice2");
 var button3 = document.querySelector("#choice3");
 var button4 = document.querySelector("#choice4");
 
+// Global variable used later, but declared with the rest of the variables
 var clickedID = "";
 var currentQuestion;
 
@@ -35,9 +34,10 @@ var question2 = {
   choice4: "Null",
   answer: "choice2"
 }
-
+// Puts all questions into an array
 var questions = [question1, question2];
 
+// Listens for a click on the 'start game' button, and starts the game when clicked
 var startBtn = document.querySelector("#startBtn");
 startBtn.addEventListener("click", startGame);
 
@@ -88,7 +88,7 @@ function endGame() {
 }
 
 
-
+// Sets the time
 function setTimer() {
   var timeInterval = setInterval(function(){
     timerEl.textContent =  `${timeLeft} second(s) remaining`;
@@ -102,6 +102,7 @@ function setTimer() {
   }, 1000);
 }
 
+// Runs the game. This function is called when the 'start game' button is clicked
 function startGame() {
   setTimer();
   startScreen.setAttribute("style", "visibility:hidden");
