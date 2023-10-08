@@ -1,6 +1,7 @@
 var timeLeft = 60;
 var score = 0;
 var index = 0;
+var highScores = JSON.parse(localStorage.getItem("High Scores"));
 
 var startScreen = document.querySelector(".start-screen");
 var timerEl = document.querySelector("#timer");
@@ -40,6 +41,9 @@ var question2 = {
 // Puts all questions into an array
 var questions = [question1, question2];
 
+quiz.setAttribute("style", "display: none")
+scorebox.setAttribute("style", "display: none");
+
 // Listens for a click on the 'start game' button, and starts the game when clicked
 var startBtn = document.querySelector("#startBtn");
 startBtn.addEventListener("click", startGame);
@@ -57,6 +61,7 @@ quiz.addEventListener("click", function(event) {
   if( clicked.matches("button") ){
     clickedID = clicked.getAttribute("id");
     if (clickedID === currentQuestion.answer) {
+      // Removes the question that was just used from the array of possible questions
       questions.splice(index, 1);
       if (questions.length > 0) {
         setQuestion();
@@ -86,15 +91,27 @@ function setQuestion() {
 // This function will run when either time runs out, or all questions have been answered correctly
 function endGame() {
   score = Math.ceil(timeLeft);
-  scorebox.setAttribute("style", "visibility:visible");
-  question.textContent = "Game Over!";
-  document.querySelector("#choices").textContent = `Your score was ${score}!`;
+  quiz.setAttribute("style", "display: none");
+  scorebox.setAttribute("style", "display: initial");
+  document.querySelector("#yourScore").textContent = `Your score was ${score}!`;
 
 }
 
 // Updates the scores when the user submits their initials
 addScore.addEventListener("click", function(event) {
-  localStorage.setItem("Initials", initials.value);
+  var newScore = {
+    initials: initials.value.trim(),
+    score: score,
+  }
+  highScores.push(newScore);
+  console.log(highScores);
+  localStorage.setItem("High Scores", JSON.stringify(highScores));
+  scorebox.setAttribute("style", "display: none")
+  startScreen.setAttribute("style", "display: initial");
+  quiz.setAttribute("style", "display: none");
+  // This refills the array of questions in case the user would like to play again.
+  questions = [question1, question2];
+
 })
 
 
@@ -116,8 +133,8 @@ function setTimer() {
 // Runs the game. This function is called when the 'start game' button is clicked
 function startGame() {
   setTimer();
-  startScreen.setAttribute("style", "visibility:hidden");
-  quiz.setAttribute("style", "visibility:visible");
+  startScreen.setAttribute("style", "display: none");
+  quiz.setAttribute("style", "display: initial");
   setQuestion();
 
 }

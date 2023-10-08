@@ -36,6 +36,15 @@ main {
   padding: 0;
 }
 
+.scorebox {
+  display: inline-block;
+  text-align: center;
+}
+
+.scorebox button {
+  display: inline;
+}
+
 button {
   display: flex;
   padding: 10px;
