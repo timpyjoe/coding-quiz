@@ -9,6 +9,8 @@ var quiz = document.querySelector(".question-block");
 var scorebox = document.querySelector(".scorebox");
 var initials = document.querySelector("#initials");
 var addScore = document.querySelector("#addScore");
+var scoreBoard = document.querySelector(".scoreboard");
+var scores = document.querySelector("#scoreboard");
 
 var question = document.querySelector("#question");
 var button1 = document.querySelector("#choice1");
@@ -43,6 +45,7 @@ var questions = [question1, question2];
 
 quiz.setAttribute("style", "display: none")
 scorebox.setAttribute("style", "display: none");
+scoreBoard.setAttribute("style", "display: none")
 
 // Listens for a click on the 'start game' button, and starts the game when clicked
 var startBtn = document.querySelector("#startBtn");
@@ -94,25 +97,42 @@ function endGame() {
   quiz.setAttribute("style", "display: none");
   scorebox.setAttribute("style", "display: initial");
   document.querySelector("#yourScore").textContent = `Your score was ${score}!`;
-
 }
+
 
 // Updates the scores when the user submits their initials
 addScore.addEventListener("click", function(event) {
   var newScore = {
-    initials: initials.value.trim(),
+    initials: initials.value,
     score: score,
   }
   highScores.push(newScore);
+  highScores.sort(function(a, b){return b.score - a.score});
+  while (highScores.length > 10) {
+    highScores.pop();}
   console.log(highScores);
   localStorage.setItem("High Scores", JSON.stringify(highScores));
   scorebox.setAttribute("style", "display: none")
-  startScreen.setAttribute("style", "display: initial");
+  // startScreen.setAttribute("style", "display: initial");
   quiz.setAttribute("style", "display: none");
   // This refills the array of questions in case the user would like to play again.
   questions = [question1, question2];
+  initials = "";
+  scoreboard();
 
 })
+
+function scoreboard() {
+  scores.innerHTML = "";
+  highScores.forEach(function(item) {
+    var nextName = item.initials;
+    var nextScore = item.score;
+    var nextChild = document.createElement("li");
+    nextChild.textContent = `${nextName}       ${nextScore}`;
+    scores.appendChild(nextChild);
+    scoreBoard.setAttribute("style", "display: initial");
+  })
+}
 
 
 // Sets the time
