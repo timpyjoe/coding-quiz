@@ -99,6 +99,15 @@ function endGame() {
   document.querySelector("#yourScore").textContent = `Your score was ${score}!`;
 }
 
+// displays the scoreboard when the 'view highscores' field is clicked
+document.getElementById("viewScores").addEventListener("click", function(event) {
+  endGame();
+  timeLeft=0
+  timerEl.textContent = "";
+  
+  scoreboard();
+  scorebox.setAttribute("style", "display: none");
+});
 
 // Updates the scores when the user submits their initials
 addScore.addEventListener("click", function(event) {
